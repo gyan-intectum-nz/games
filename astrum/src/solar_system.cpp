@@ -81,12 +81,10 @@ namespace astrum
     const auto luna_initial_position = ludo::vec3 { -1.0f * astronomical_unit + luna_orbit_distance, 0.0f, 0.0f };
     const auto luna_initial_velocity = terra_initial_velocity + ludo::vec3 { 0.0f, orbital_speed(luna_orbit_distance, terra_mass), 0.0f };
 
-    //auto person_surface_position = ludo::vec3 { 4272.0f,-3072.0f,3606.0f };
     auto person_surface_position = ludo::vec3 { 4138.0f, -3054.0f, 3800.0f };
     const auto person_initial_position = terra_initial_position + person_surface_position;
     const auto person_initial_velocity = ludo::vec3 { 0.0f, orbital_speed(ludo::length(person_initial_position), sol_mass), 0.0f };
 
-    //const auto spaceship_initial_position = person_initial_position + ludo::vec3 { 0.0f, 0.0f, 10.0f };
     const auto spaceship_initial_position = terra_initial_position + ludo::vec3 { 4154.0f, -3046.0f, 3785.0f };
     const auto spaceship_initial_velocity = ludo::vec3 { 0.0f, orbital_speed(ludo::length(spaceship_initial_position), sol_mass), 0.0f };
 

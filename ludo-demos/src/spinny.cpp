@@ -46,7 +46,7 @@ int main()
 
   // TEXTURES
 
-  auto texture = ludo::load(ludo::asset_folder + "/effects/blue-noise.png");
+  auto texture = ludo::load(ludo::asset_folder + "/models/minifig-diffuse.png");
 
   // CUBY
 

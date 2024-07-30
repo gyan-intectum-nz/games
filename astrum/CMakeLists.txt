@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 
-include(../common.cmake)
+# Compiling
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Project
 #########################
@@ -18,7 +21,7 @@ add_subdirectory(../ludo-opengl lib/ludo-opengl)
 add_subdirectory(../ludo-stb lib/ludo-stb)
 
 # noise
-add_subdirectory(lib/libnoise lib/libnoise)
+add_subdirectory(lib/libnoise)
 
 # Source
 #########################
@@ -59,12 +62,12 @@ set(SRC_FILES
     src/terrain/mesh.cpp
     src/util.cpp)
 
-# Standalone Target
+# Target
 #########################
 add_executable(astrum ${SRC_FILES})
 target_include_directories(astrum PUBLIC src)
 
-# Standalone Target Dependencies
+# Target Dependencies
 #########################
 
 # ludo
@@ -84,43 +87,27 @@ IF(UNIX)
     target_link_libraries(astrum pthread)
 ENDIF(UNIX)
 
-# Standalone Target Resources
+# Target Resources
 #########################
 add_custom_command(TARGET astrum PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/assets ${PROJECT_BINARY_DIR}/assets)
 
 # Demo Targets
 #########################
-add_executable(importy src/demos/importy.cpp)
 add_executable(loddy src/demos/loddy.cpp src/meshes/lod_shaders.cpp src/meshes/lods.cpp)
-add_executable(noisy src/demos/noisy.cpp)
-add_executable(physicy src/demos/physicy.cpp)
-add_executable(spinny src/demos/spinny.cpp)
 
 # Demo Target Dependencies
 #########################
 
 # ludo
-target_link_libraries(importy ludo)
-target_link_libraries(importy ludo-assimp)
-target_link_libraries(importy ludo-bullet) # TODO revise, only for assimp...
-target_link_libraries(importy ludo-glfw)
-target_link_libraries(importy ludo-opengl)
-target_link_libraries(importy ludo-stb)
 target_link_libraries(loddy ludo)
 target_link_libraries(loddy ludo-assimp)
 target_link_libraries(loddy ludo-bullet) # TODO revise, only for assimp...
 target_link_libraries(loddy ludo-glfw)
 target_link_libraries(loddy ludo-opengl)
 target_link_libraries(loddy ludo-stb)
-target_link_libraries(noisy ludo)
-target_link_libraries(noisy ludo-glfw)
-target_link_libraries(noisy ludo-opengl)
-target_link_libraries(physicy ludo)
-target_link_libraries(physicy ludo-bullet)
-target_link_libraries(physicy ludo-glfw)
-target_link_libraries(physicy ludo-opengl)
-target_link_libraries(spinny ludo)
-target_link_libraries(spinny ludo-glfw)
-target_link_libraries(spinny ludo-opengl)
-target_link_libraries(spinny ludo-stb)
+
+# Demo Target Resources
+#########################
+add_custom_command(TARGET loddy PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/assets ${PROJECT_BINARY_DIR}/assets)

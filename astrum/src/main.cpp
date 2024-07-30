@@ -145,11 +145,17 @@ int main()
   auto physics_context = ludo::add(inst, ludo::physics_context { .gravity = ludo::vec3_zero });
   ludo::init(*physics_context);
 
+  ludo::thread_pool_start();
+
+  std::cout << std::fixed << std::setprecision(4) << "main load time: " << ludo::elapsed(timer) << "s" << std::endl;
+  ludo::reset(timer);
+
   astrum::add_solar_system(inst);
 
-  ludo::commit(*default_grid);
+  std::cout << std::fixed << std::setprecision(4) << "solar system load time: " << ludo::elapsed(timer) << "s" << std::endl;
+  ludo::reset(timer);
 
-  ludo::thread_pool_start();
+  ludo::commit(*default_grid);
 
   ludo::add<ludo::script>(inst, [](ludo::instance& inst)
   {
@@ -239,7 +245,7 @@ int main()
 
   ludo::add<ludo::script>(inst, astrum::print_timings);
 
-  std::cout << std::fixed << std::setprecision(4) << "load time (seconds): " << ludo::elapsed(timer) << std::endl;
+  std::cout << std::fixed << std::setprecision(4) << "remaining load time: " << ludo::elapsed(timer) << "s" << std::endl;
 
   ludo::play(inst);
 }
